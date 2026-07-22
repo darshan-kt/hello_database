@@ -111,6 +111,22 @@ keys; an OpenAI key is a drop-in upgrade, not a requirement.
 quickstart, the chat UI, and `make demo` for a narrated walkthrough
 (including a real local-LLM call).
 
+---
+
+## simpleDB — the fundamentals, built by hand
+
+Unlike the three projects above, `simpleDB/` wasn't built end-to-end
+for me — I asked to be guided through it step by step instead, typing
+every file myself: Docker Compose → a normalized 4-table schema
+(teachers, students, courses, enrollments) → a containerized Python app
+→ create → read-with-joins → update/delete, finishing with a delete
+that Postgres correctly refuses because of a foreign key constraint.
+The lightest project here, and the one where I did the typing.
+
+**[→ simpleDB/README.md](simpleDB/README.md)** — quickstart. Full
+step-by-step walkthrough (objective, every step, every result):
+**[`simpleDB/basic_sql.md`](simpleDB/basic_sql.md)**.
+
 ## Repo layout
 
 ```
@@ -122,5 +138,6 @@ hello_database/
 │   └── 4.Hospital_AI_Knowledge_Assistant_RAG_Roadmap.md   The brief behind HospitalRAG_DB/
 ├── mini_EcommerceDB/     Project 1 -- MySQL, transactions, the fundamentals
 ├── EMS_DB/               Project 2 -- PostgreSQL, advanced SQL, reporting
-└── HospitalRAG_DB/       Project 3 -- PostgreSQL + pgvector, RAG, embeddings, LLMs
+├── HospitalRAG_DB/       Project 3 -- PostgreSQL + pgvector, RAG, embeddings, LLMs
+└── simpleDB/             Bonus -- the same fundamentals, hand-built step by step
 ```
