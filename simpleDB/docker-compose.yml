@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: simpledb_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: simpledb
+      POSTGRES_USER: simpledb_user
+      POSTGRES_PASSWORD: simpledb_pass
+    ports:
+      - "5435:5432"
+    volumes:
+      - simpledb_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U simpledb_user -d simpledb"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+# Application service (Python service)
+  app:
+    build: .
+    container_name: simpledb_app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - .:/app
+
+volumes:
+  simpledb_data:
