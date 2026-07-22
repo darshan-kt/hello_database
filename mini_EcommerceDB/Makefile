@@ -131,8 +131,8 @@ register: ## STEP 1 -- Create an account. Vars: NAME, EMAIL, PASSWORD
 	  -H 'Content-Type: application/json' \
 	  -d '{"name":"$(NAME)","email":"$(EMAIL)","password":"$(PASSWORD)"}' | $(PRETTY)
 
-login: ## STEP 1b -- Log in instead, if you already registered. Vars: EMAIL, PASSWORD
-	@echo "==> POST /api/login   ->   SELECT * FROM users WHERE email = ...  (compares password hash)"
+login: ## STEP 1b -- Log in instead (demo mode: any email/password works, account auto-created if new). Vars: EMAIL, PASSWORD
+	@echo "==> POST /api/login   ->   SELECT * FROM users WHERE email = ...  (auto-creates the account if not found; password isn't checked)"
 	@curl -sS -c $(COOKIE_JAR) -b $(COOKIE_JAR) -X POST $(BASE_URL)/api/login \
 	  -H 'Content-Type: application/json' \
 	  -d '{"email":"$(EMAIL)","password":"$(PASSWORD)"}' | $(PRETTY)

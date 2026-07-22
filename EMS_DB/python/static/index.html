@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Education Management System</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">🎓 EMS</div>
+  <div id="auth-status" class="auth-status"></div>
+</header>
+
+<div id="toast" class="toast hidden"></div>
+
+<!-- ---------------- Auth screen ---------------- -->
+<section id="auth-screen" class="auth-screen">
+  <div class="auth-card">
+    <div class="tabs">
+      <button class="tab active" data-role="student">Student</button>
+      <button class="tab" data-role="admin">Admin</button>
+    </div>
+
+    <!-- Student -->
+    <div id="student-auth">
+      <div class="tabs subtabs">
+        <button class="tab active" data-subtab="student-login">Log in</button>
+        <button class="tab" data-subtab="student-register">Register</button>
+      </div>
+      <form id="student-login-form" class="auth-form">
+        <label>Email <input type="email" name="email" required value="demo.student@ems.test"></label>
+        <label>Password <input type="password" name="password" required value="learn-123"></label>
+        <button type="submit">Log in</button>
+        <p class="hint">Demo mode: any email/password logs you in (pre-filled account has real enrollment/grade/payment history). Typing a new email creates an account for it automatically.</p>
+      </form>
+      <form id="student-register-form" class="auth-form hidden">
+        <label>Name <input type="text" name="name" required></label>
+        <label>Email <input type="email" name="email" required></label>
+        <label>Password <input type="password" name="password" required></label>
+        <label>Department
+          <select name="department_id" id="register-department-select"></select>
+        </label>
+        <button type="submit">Create account</button>
+      </form>
+    </div>
+
+    <!-- Admin -->
+    <div id="admin-auth" class="hidden">
+      <form id="admin-login-form" class="auth-form">
+        <label>Email <input type="email" name="email" required value="admin@ems.test"></label>
+        <label>Password <input type="password" name="password" required value="admin-123"></label>
+        <button type="submit">Log in as admin</button>
+        <p class="hint">Demo mode: any email/password logs you in as admin (pre-filled account shown). A new email creates an admin account for it automatically -- registrar provisioning is relaxed for this learning sandbox.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ---------------- Student portal ---------------- -->
+<main id="student-screen" class="app-screen hidden">
+  <nav class="tabs page-tabs">
+    <button class="tab active" data-page="s-dashboard">Dashboard</button>
+    <button class="tab" data-page="s-courses">Browse Courses</button>
+    <button class="tab" data-page="s-enrollments">My Enrollments</button>
+    <button class="tab" data-page="s-payments">Payments</button>
+    <button class="tab" data-page="s-certificates">Certificates</button>
+  </nav>
+
+  <section id="page-s-dashboard" class="page">
+    <div class="stat-grid" id="student-stats"></div>
+  </section>
+
+  <section id="page-s-courses" class="page hidden">
+    <div class="toolbar">
+      <input type="text" id="course-search-input" placeholder="Full-text search courses (e.g. &quot;programming&quot;)...">
+      <button id="course-search-btn">Search</button>
+      <div class="category-bar" id="department-filter-bar"></div>
+    </div>
+    <div class="product-grid" id="course-grid"></div>
+  </section>
+
+  <section id="page-s-enrollments" class="page hidden">
+    <div id="enrollment-list" class="order-list"></div>
+  </section>
+
+  <section id="page-s-payments" class="page hidden">
+    <div id="payment-list" class="order-list"></div>
+  </section>
+
+  <section id="page-s-certificates" class="page hidden">
+    <div class="toolbar">
+      <button id="request-cert-btn" class="primary">Request Transcript Certificate</button>
+    </div>
+    <div id="certificate-list" class="order-list"></div>
+  </section>
+</main>
+
+<!-- ---------------- Admin console ---------------- -->
+<main id="admin-screen" class="app-screen hidden">
+  <nav class="tabs page-tabs">
+    <button class="tab active" data-page="a-dashboard">Dashboard</button>
+    <button class="tab" data-page="a-departments">Departments</button>
+    <button class="tab" data-page="a-reports">Reports</button>
+    <button class="tab" data-page="a-directory">Directory</button>
+    <button class="tab" data-page="a-jsonb">JSONB Explorer</button>
+  </nav>
+
+  <section id="page-a-dashboard" class="page">
+    <div class="stat-grid" id="admin-stats"></div>
+  </section>
+
+  <section id="page-a-departments" class="page hidden">
+    <p class="hint">Recursive CTE: walks the self-referential department hierarchy (Schools &gt; Departments).</p>
+    <div id="department-tree" class="tree"></div>
+  </section>
+
+  <section id="page-a-reports" class="page hidden">
+    <div class="report-tabs">
+      <button class="report-tab active" data-report="dept">Department Report (CTE)</button>
+      <button class="report-tab" data-report="gpa">GPA Rankings (Window Fn)</button>
+      <button class="report-tab" data-report="semester">Semester Report (Materialized View)</button>
+    </div>
+
+    <div id="report-dept" class="report-panel">
+      <table class="data-table" id="dept-report-table"></table>
+    </div>
+
+    <div id="report-gpa" class="report-panel hidden">
+      <div class="toolbar">
+        <select id="gpa-department-filter"><option value="">All departments</option></select>
+      </div>
+      <table class="data-table" id="gpa-report-table"></table>
+    </div>
+
+    <div id="report-semester" class="report-panel hidden">
+      <div class="toolbar">
+        <button id="refresh-semester-btn">Refresh materialized view</button>
+        <span id="refresh-status" class="hint"></span>
+      </div>
+      <table class="data-table" id="semester-report-table"></table>
+    </div>
+  </section>
+
+  <section id="page-a-directory" class="page hidden">
+    <div class="toolbar">
+      <select id="directory-type">
+        <option value="teachers">Teachers</option>
+        <option value="students">Students</option>
+      </select>
+      <input type="text" id="directory-search-input" placeholder="Full-text search by name...">
+      <button id="directory-search-btn">Search</button>
+    </div>
+    <table class="data-table" id="directory-table"></table>
+  </section>
+
+  <section id="page-a-jsonb" class="page hidden">
+    <p class="hint">JSONB queries over <code>assignments.settings</code> (deadline, rubric, attachments, late_penalty).</p>
+    <div class="toolbar">
+      <button id="jsonb-late-penalty-btn">Assignments with a late penalty (<code>settings ? 'late_penalty'</code>)</button>
+      <input type="date" id="jsonb-due-date-input" value="2025-11-15">
+      <button id="jsonb-due-before-btn">Assignments due before this date</button>
+    </div>
+    <div id="jsonb-result" class="jsonb-result"></div>
+  </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

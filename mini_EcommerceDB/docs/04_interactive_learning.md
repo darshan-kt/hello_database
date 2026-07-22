@@ -94,7 +94,7 @@ around.
 | # | Command | HTTP call | SQL underneath | Concept |
 |---|---------|-----------|-----------------|---------|
 | 1 | `make register` | `POST /api/register` | `INSERT INTO users (...)` | Primary key auto-increment; `UNIQUE(email)` constraint |
-| 1b | `make login EMAIL=... PASSWORD=...` | `POST /api/login` | `SELECT * FROM users WHERE email = ...` | Point lookup on a unique index; password hash comparison |
+| 1b | `make login EMAIL=... PASSWORD=...` | `POST /api/login` | `SELECT * FROM users WHERE email = ...`, then `INSERT` if not found | Point lookup on a unique index; demo mode skips the password check and auto-creates unknown emails (see Stage 4's "duplicate email" test, which still applies to `/api/register`) |
 | 2 | `make categories` | `GET /api/categories` | `SELECT * FROM categories` | Plain table scan (it's a tiny table — no index needed) |
 | 3 | `make products CATEGORY=1` | `GET /api/products?category_id=1` | `SELECT * FROM products WHERE category_id = 1` | Foreign key column doubling as a filter, backed by `idx_products_category` |
 | 4 | `make cart-add PRODUCT=1 QTY=2` | `POST /api/cart/items` | `INSERT ... ON DUPLICATE KEY UPDATE quantity = quantity + 2` | Upsert pattern — the `UNIQUE(cart_id, product_id)` constraint is what makes "add the same product twice" *increment* instead of duplicate |

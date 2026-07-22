@@ -1,0 +1,642 @@
+I think we can improve it even further.
+
+Instead of just creating an **Education Management System**, let's treat it like a **real software product** that evolves over time—just as it would in a startup or university.
+
+---
+
+# Project 2: Education Management System (EMS)
+
+**Technology Stack**
+
+- Database: PostgreSQL
+- Language: Python
+- Driver: `psycopg`
+- Architecture: Repository Pattern + Service Layer
+- Goal: Learn advanced PostgreSQL while building a production-style backend.
+
+---
+
+# Professional Project Goal
+
+Build a backend for a university or online learning platform that supports:
+
+- Student Management
+- Teacher Management
+- Departments
+- Courses
+- Enrollments
+- Attendance
+- Assignments
+- Exams
+- Grades
+- Payments
+- Certificates
+- Reports
+
+This project should showcase advanced PostgreSQL capabilities rather than just **CRUD**.
+
+---
+
+# Overall Development Roadmap
+
+```text
+### Business Requirements
+    │
+    ▼
+### Requirement Analysis
+    │
+    ▼
+### Domain Modeling
+    │
+    ▼
+ER Diagram
+    │
+    ▼
+### Database Design
+    │
+    ▼
+Normalization
+    │
+    ▼
+PostgreSQL Schema
+    │
+    ▼
+### Seed Data
+    │
+    ▼
+### Python Backend
+    │
+    ▼
+### Business Features
+    │
+    ▼
+Advanced **SQL**
+    │
+    ▼
+Optimization
+    │
+    ▼
+Reporting
+    │
+    ▼
+### Production Refactoring
+```
+
+---
+
+# Module 0 — Requirement Analysis
+
+## Business Problem
+
+A university currently manages everything in spreadsheets.
+
+Problems:
+
+- Duplicate student records
+- Manual attendance
+- Difficult **GPA** calculation
+- No enrollment history
+- No reporting
+
+### Deliverables
+
+- Requirement document
+- User stories
+- Functional requirements
+- Non-functional requirements
+- Business rules
+
+---
+
+# Module 1 — Domain Modeling
+
+Identify entities.
+
+```text Student
+
+Teacher
+
+Department
+
+Course
+
+Enrollment
+
+Semester
+
+Attendance
+
+Assignment
+
+Exam
+
+Grade
+
+Payment
+
+Certificate ```
+
+For every entity answer:
+
+- Why does it exist?
+- What attributes belong to it?
+- Who owns it?
+- Which entities reference it?
+
+### Deliverable
+
+Complete domain model.
+
+---
+
+# Module 2 — Database Design
+
+Design every table.
+
+For each table define:
+
+- Primary Key
+- Foreign Keys
+- Constraints
+- Default values
+- Data types
+- Indexes
+
+Example order:
+
+```text Departments
+
+Teachers
+
+Students
+
+Courses
+
+Semesters
+
+Enrollments
+
+Attendance
+
+Assignments
+
+Exams
+
+Grades
+
+Payments
+
+Certificates ```
+
+---
+
+# Module 3 — ER Diagram
+
+Design relationships.
+
+```text
+Departments
+    │
+    ├──────── Teachers
+    │
+    ├──────── Students
+    │
+    └──────── Courses
+
+Students
+    │
+    ├──────── Enrollments
+    │               │
+    │               │
+    │               Courses
+    │
+    ├──────── Attendance
+    │
+    ├──────── Grades
+    │
+    ├──────── Payments
+    │
+    └──────── Certificates
+
+Teachers
+    │
+    ├──────── Courses
+    │
+    ├──────── Assignments
+    │
+    └──────── Exams
+```
+
+Deliverable:
+
+Complete ER diagram.
+
+---
+
+# Module 4 — Normalization
+
+Normalize to **3NF**.
+
+Check:
+
+- No repeating columns
+- No duplicate student information
+- No duplicate course information
+- Correct many-to-many bridge tables
+
+Deliverable:
+
+Normalized schema.
+
+---
+
+# Module 5 — PostgreSQL Implementation
+
+Create
+
+- Database
+- Schema
+- Tables
+- Constraints
+- Indexes
+
+Verify every object before continuing.
+
+Deliverable:
+
+Working PostgreSQL database.
+
+---
+
+# Module 6 — Seed Data
+
+Create realistic data.
+
+Example:
+
+```text Departments
+
+10
+
+Teachers
+
+50
+
+Students
+
+**1000**
+
+Courses
+
+**100**
+
+Enrollments
+
+**5000**
+
+Attendance
+
+**25000**
+
+Assignments
+
+**400**
+
+Grades
+
+**6000**
+
+Payments
+
+**1000** ```
+
+Large enough to demonstrate realistic queries.
+
+---
+
+# Module 7 — Python Backend
+
+Recommended structure
+
+```text ems-backend/
+
+database/
+
+repositories/
+
+services/
+
+models/
+
+scripts/
+
+tests/
+
+main.py ```
+
+Responsibilities
+
+### database
+
+Connection management
+
+### repositories
+
+**SQL** only
+
+### services
+
+Business logic
+
+### models
+
+Entities
+
+### scripts
+
+Schema creation
+
+Seed data
+
+Migrations
+
+---
+
+# Module 8 — Feature Development
+
+Develop features one at a time.
+
+### Phase A
+
+Student **CRUD**
+
+Teacher **CRUD**
+
+Department **CRUD**
+
+---
+
+### Phase B
+
+### Course Management
+
+### Semester Management
+
+---
+
+### Phase C
+
+### Student Enrollment
+
+Many-to-many relationships
+
+Transactions
+
+---
+
+### Phase D
+
+Attendance
+
+Daily attendance
+
+Monthly reports
+
+---
+
+### Phase E
+
+Assignments
+
+Submission
+
+Deadlines
+
+---
+
+### Phase F
+
+Examinations
+
+Marks
+
+Grades
+
+**GPA**
+
+---
+
+### Phase G
+
+### Fee Payments
+
+Invoices
+
+Payment history
+
+---
+
+### Phase H
+
+Certificates
+
+Completion status
+
+Transcript generation
+
+---
+
+# Module 9 — Advanced PostgreSQL
+
+This is where PostgreSQL becomes the focus.
+
+Topics to implement naturally:
+
+### CTEs
+
+Build readable academic reports.
+
+---
+
+### Window Functions
+
+Examples:
+
+- Student rank
+- **GPA** ranking
+- Department toppers
+
+---
+
+### Views
+
+### Student Dashboard
+
+### Teacher Dashboard
+
+### Admin Dashboard
+
+---
+
+### Materialized Views
+
+Semester reports
+
+Attendance summaries
+
+---
+
+### JSONB
+
+Store flexible assignment settings.
+
+Example
+
+```text ### Assignment Settings
+
+submission_deadline
+
+rubric
+
+attachments
+
+late_penalty ```
+
+---
+
+### Full Text Search
+
+Search courses
+
+Search teachers
+
+Search students
+
+---
+
+### Recursive Queries
+
+Department hierarchy
+
+Course prerequisites
+
+---
+
+# Module 10 — Reporting
+
+Build dashboards.
+
+Examples
+
+Student
+
+- **GPA**
+- Attendance %
+- Completed credits
+
+Teacher
+
+- Assigned courses
+- Pending grading
+
+Admin
+
+- Total enrollment
+- Revenue
+- Student performance
+- Department statistics
+
+---
+
+# Module 11 — Testing
+
+Test
+
+Happy path
+
+- Student registers
+- Student enrolls
+- Attendance recorded
+- Exam completed
+
+Failure cases
+
+- Duplicate student
+- Invalid course
+- Enrollment limit reached
+- Missing payment
+- Invalid semester
+
+Validate every transaction.
+
+---
+
+# Module 12 — Optimization
+
+Inspect
+
+- Slow queries
+- Execution plans
+- Missing indexes
+
+Implement
+
+- B-tree indexes
+- Composite indexes
+- Partial indexes (where appropriate)
+
+Measure improvements with `**EXPLAIN** **ANALYZE**`.
+
+---
+
+# Module 13 — Refactoring
+
+Improve architecture.
+
+Move **SQL** into repositories.
+
+Move business logic into services.
+
+Centralize connection management.
+
+Remove duplicate code.
+
+---
+
+# Final Deliverables
+
+By the end of the project you should have:
+
+- Business Requirement Specification
+- User Stories
+- Domain Model
+- ER Diagram
+- Normalized Database Schema
+- PostgreSQL Database
+- Python Backend
+- Repository Layer
+- Service Layer
+- Seed Data Generator
+- **CRUD** Features
+- Enrollment Workflow
+- Attendance Workflow
+- Examination Workflow
+- Payment Workflow
+- Reporting Module
+- Test Suite
+- Query Optimization Notes
+- Project Documentation
+
+---
+
+# Learning Outcomes
+
+After completing this project, you should be able to:
+
+- Design normalized relational databases.
+- Model complex one-to-one, one-to-many, and many-to-many relationships.
+- Use PostgreSQL features such as CTEs, window functions, **JSONB**, views, materialized views, and `**EXPLAIN** **ANALYZE**`.
+- Build a layered Python backend that separates database access from business logic.
+- Write production-style reporting queries.
+- Diagnose and optimize query performance.
+- Explain your design decisions and trade-offs in technical interviews.

@@ -45,9 +45,12 @@ docker compose down -v    # wipe data and start clean next time
 
 ## Using the UI
 
-1. **Register** (or log in if you've already created an account in this
-   session — the seed data's accounts have placeholder password hashes
-   that won't match any real password, so start with **Register**).
+1. **Log in** with any email and any password — this is a learning
+   sandbox, not a real auth system, so the password is never checked.
+   Typing an email that doesn't have an account yet creates one
+   automatically (e.g. `asha@example.com`, one of the seeded accounts,
+   or anything else). **Register** still works too, if you want to pick
+   your own display name.
 2. **Browse the catalog** — filter by category (`All / Electronics /
    Books / Home`) using the pill buttons above the product grid.
 3. **Add to cart** — set a quantity and click *Add to cart* on any
@@ -125,8 +128,8 @@ or `/api/login` sets the session).
 
 | Method & path | Purpose |
 |---|---|
-| `POST /api/register` | `{name, email, password}` → creates a user and logs in |
-| `POST /api/login` | `{email, password}` → logs in |
+| `POST /api/register` | `{name, email, password}` → creates a user and logs in (409 on duplicate email) |
+| `POST /api/login` | `{email, password}` → logs in; password isn't checked, and an unrecognized email auto-creates the account |
 | `POST /api/logout` | Clears the session |
 | `GET /api/me` | Current user, or 401 |
 | `GET /api/categories` | All categories |
@@ -214,6 +217,11 @@ the prior failed attempt instead of conflicting with it — see
 - **Password hashing is SHA-256 for demo simplicity** (`python/app.py`,
   `hash_password`) — called out explicitly because a real system needs
   bcrypt/argon2 with per-user salt, not a bare hash.
+- **Login never actually checks the password, and auto-creates unknown
+  emails** (`python/app.py`, `login`) — a deliberate choice for a
+  learning sandbox where the interesting part is the cart/checkout/order
+  flow, not gatekeeping. This is exactly the line a real system must not
+  cross; flagged here so it's not mistaken for an oversight.
 - **Session auth via signed cookies** (`Flask`'s built-in `session`) —
   enough to demonstrate "logged-in user" scoping for cart/orders without
   building a token/JWT layer the mini project doesn't need yet.

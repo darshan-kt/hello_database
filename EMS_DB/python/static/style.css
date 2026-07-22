@@ -1,0 +1,186 @@
+:root {
+  --bg: #f6f7fb;
+  --surface: #ffffff;
+  --border: #e3e6ee;
+  --text: #1c1f2b;
+  --muted: #6b7280;
+  --primary: #4f46e5;
+  --primary-dark: #4338ca;
+  --success: #16a34a;
+  --danger: #dc2626;
+  --warning: #d97706;
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(20, 20, 43, 0.08), 0 1px 2px rgba(20, 20, 43, 0.06);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.hidden { display: none !important; }
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 28px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.brand { font-size: 20px; font-weight: 700; }
+.auth-status { font-size: 14px; color: var(--muted); display: flex; align-items: center; gap: 12px; }
+.auth-status button {
+  background: none; border: 1px solid var(--border); border-radius: 6px;
+  padding: 6px 12px; cursor: pointer; color: var(--text);
+}
+.role-badge {
+  font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px;
+  text-transform: uppercase; background: #ede9fe; color: #5b21b6;
+}
+
+.toast {
+  position: fixed; top: 70px; right: 24px; z-index: 100;
+  background: var(--text); color: #fff; padding: 12px 18px;
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  max-width: 380px; font-size: 14px; transition: opacity .2s;
+}
+.toast.error { background: var(--danger); }
+.toast.success { background: var(--success); }
+
+/* Auth screen */
+.auth-screen {
+  display: flex; align-items: center; justify-content: center;
+  min-height: calc(100vh - 65px);
+  padding: 24px;
+}
+.auth-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 28px; width: 380px; box-shadow: var(--shadow);
+}
+.tabs { display: flex; gap: 4px; margin-bottom: 18px; border-bottom: 1px solid var(--border); }
+.tab {
+  flex: 1; padding: 10px; background: none; border: none; cursor: pointer;
+  font-size: 14px; color: var(--muted); border-bottom: 2px solid transparent;
+}
+.tab.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 600; }
+.subtabs { margin-bottom: 14px; }
+
+.auth-form { display: flex; flex-direction: column; gap: 12px; }
+.auth-form label { font-size: 13px; color: var(--muted); display: flex; flex-direction: column; gap: 4px; }
+.auth-form input, select {
+  font-size: 14px; padding: 9px 10px; border: 1px solid var(--border); border-radius: 6px;
+  font-family: inherit;
+}
+.auth-form button, button.primary, #checkout-btn {
+  cursor: pointer; border: none; border-radius: 6px; padding: 10px 14px;
+  font-size: 14px; font-weight: 600;
+}
+button.primary, .auth-form button { background: var(--primary); color: #fff; }
+button.primary:hover, .auth-form button:hover { background: var(--primary-dark); }
+button.primary:disabled { background: #c7c9f5; cursor: not-allowed; }
+.hint { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.hint code { background: var(--bg); padding: 1px 4px; border-radius: 4px; }
+
+/* App screen */
+.app-screen { padding: 20px 28px 60px; }
+.page-tabs { max-width: 1200px; margin: 0 auto 18px; border-bottom: 1px solid var(--border); }
+.page { max-width: 1200px; margin: 0 auto; }
+
+/* Stat grid (dashboards) */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+.stat-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 18px; box-shadow: var(--shadow);
+}
+.stat-card .value { font-size: 28px; font-weight: 700; }
+.stat-card .label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
+
+/* Toolbar */
+.toolbar { display: flex; gap: 10px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+.toolbar input, .toolbar select { padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; }
+.toolbar button {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+  padding: 8px 14px; font-size: 13px; cursor: pointer;
+}
+.toolbar button:hover { background: var(--bg); }
+
+.category-bar { display: flex; gap: 8px; flex-wrap: wrap; }
+.category-bar button {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 999px;
+  padding: 7px 16px; font-size: 13px; cursor: pointer;
+}
+.category-bar button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* Course grid */
+.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.product-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 6px;
+}
+.product-card h3 { margin: 0; font-size: 15px; }
+.product-card .meta { font-size: 12px; color: var(--muted); }
+.product-card .prereqs { font-size: 12px; color: var(--warning); }
+.product-card .desc { font-size: 12px; color: var(--muted); max-height: 3.6em; overflow: hidden; }
+.product-card select, .product-card button {
+  margin-top: 4px; padding: 8px; border-radius: 6px; font-size: 13px; border: 1px solid var(--border);
+}
+.product-card button {
+  background: var(--primary); color: #fff; border: none; cursor: pointer; font-weight: 600;
+}
+.product-card button:hover { background: var(--primary-dark); }
+
+/* Orders/lists (enrollments, payments, certificates) */
+.order-list { display: flex; flex-direction: column; gap: 14px; }
+.order-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px; box-shadow: var(--shadow);
+}
+.order-card .order-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; gap: 8px; flex-wrap: wrap; }
+.status-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; text-transform: uppercase; }
+.status-pending, .status-enrolled { background: #fef3c7; color: #92400e; }
+.status-paid, .status-completed { background: #dcfce7; color: #166534; }
+.status-failed, .status-dropped { background: #fee2e2; color: #991b1b; }
+.order-card .sub { font-size: 12px; color: var(--muted); }
+.order-card button {
+  background: var(--primary); color: #fff; border: none; border-radius: 6px;
+  padding: 7px 12px; font-size: 12px; cursor: pointer; font-weight: 600;
+}
+.order-card .attendance-lines, .order-card .grade-line { margin-top: 8px; font-size: 13px; }
+
+/* Data tables (reports) */
+.data-table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+.data-table th, .data-table td { text-align: left; padding: 10px 12px; font-size: 13px; border-bottom: 1px solid var(--border); }
+.data-table th { background: var(--bg); font-weight: 600; color: var(--muted); text-transform: uppercase; font-size: 11px; letter-spacing: .03em; }
+.data-table tr:last-child td { border-bottom: none; }
+
+.report-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+.report-tab {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 999px;
+  padding: 8px 16px; font-size: 13px; cursor: pointer;
+}
+.report-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.report-panel { overflow-x: auto; }
+
+/* Department tree */
+.tree { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
+.tree-row { padding: 6px 0; font-size: 14px; border-bottom: 1px dashed var(--border); }
+.tree-row:last-child { border-bottom: none; }
+.tree-row .code { color: var(--muted); font-size: 12px; margin-left: 8px; }
+
+/* JSONB explorer */
+.jsonb-result { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); }
+.jsonb-item { padding: 10px 0; border-bottom: 1px solid var(--border); }
+.jsonb-item:last-child { border-bottom: none; }
+.jsonb-item pre { background: var(--bg); padding: 8px; border-radius: 6px; font-size: 12px; overflow-x: auto; margin: 6px 0 0; }
+
+@media (max-width: 800px) {
+  .product-grid { grid-template-columns: 1fr; }
+}

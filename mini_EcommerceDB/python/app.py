@@ -115,11 +115,25 @@ def register():
 
 @app.post("/api/login")
 def login():
+    """Demo mode: any email/password combination logs you in. If the
+    email doesn't belong to an existing account, one is created on the
+    spot -- this is a learning sandbox, not a real auth system, so
+    there's no password to get wrong."""
     data = request.get_json(force=True)
-    email, password = data.get("email"), data.get("password")
-    user = users.get_by_email(email or "")
-    if user is None or user.password_hash != hash_password(password or ""):
-        return jsonify(error="Invalid email or password"), 401
+    email = (data.get("email") or "").strip()
+    password = data.get("password") or ""
+    if not email:
+        return jsonify(error="email is required"), 400
+
+    user = users.get_by_email(email)
+    if user is None:
+        display_name = email.split("@")[0].replace(".", " ").replace("_", " ").title() or "Guest"
+        try:
+            users.create(display_name, email, hash_password(password))
+        except DuplicateEmailError:
+            pass  # lost a race with another request creating the same email
+        user = users.get_by_email(email)
+
     session["user_id"] = user.user_id
     return jsonify(user_id=user.user_id, name=user.name, email=user.email)
 
