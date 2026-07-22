@@ -67,6 +67,23 @@ docker compose down -v    # wipe data and start clean next time
 7. **Order History** tab — every past order with its line items, status
    badge (`pending` / `paid`), and payment outcome.
 
+## Learn it interactively (Makefile)
+
+Prefer the terminal over clicking? `make help` lists every step of the
+same business flow as its own command — register, browse, add to cart,
+checkout, pay, view history — each one printing the HTTP call *and* the
+SQL/transaction happening underneath it:
+
+```bash
+make up      # start everything
+make demo    # watch the full lifecycle happen, narrated, against a throwaway account
+make db-shell   # then go look at the rows it just created yourself
+```
+
+Full guided tour, with the database concept each step is teaching (indexes,
+constraints, transactions, row locking, rollback) and a set of
+"break it on purpose" exercises: **[`docs/04_interactive_learning.md`](docs/04_interactive_learning.md)**.
+
 ### What each screen demonstrates
 
 | Screenshot | Shows |
@@ -134,10 +151,13 @@ mini_EcommerceDB/
 │   ├── 01_requirements.md     Module 0 — business requirement, entities, scope
 │   ├── 02_er_diagram.md       Module 1 — ERD, normalization, constraints
 │   ├── 03_optimization.md     Module 7 — EXPLAIN evidence for every index
+│   ├── 04_interactive_learning.md   Guided tour of the Makefile learning path
 │   └── screenshots/           UI walkthrough images + walkthrough.gif
 ├── sql/
 │   ├── 01_schema.sql          Module 2 — tables, FKs, CHECK constraints, indexes
 │   └── 02_seed.sql            Realistic seed data (users, products, one paid order)
+├── Makefile                   `make help` — one target per learning step (see docs/04_...)
+├── scripts/api_walkthrough.sh  Narrated end-to-end curl script behind `make demo`
 ├── Dockerfile                 Backend image: installs deps, serves API + UI via gunicorn
 ├── docker-compose.yml         mysql + backend, backend waits on mysql's healthcheck
 ├── python/
