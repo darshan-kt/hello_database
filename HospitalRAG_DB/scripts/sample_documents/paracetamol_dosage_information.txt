@@ -1,0 +1,47 @@
+DRUG INFORMATION SHEET: PARACETAMOL (ACETAMINOPHEN)
+
+Class: Analgesic / Antipyretic
+
+INDICATIONS
+Mild to moderate pain relief; fever reduction. First-line analgesic for
+most patients, including those for whom NSAIDs are contraindicated
+(e.g. peptic ulcer disease, dengue fever, anticoagulant use).
+
+ADULT DOSAGE
+500-1000 mg orally every 4-6 hours as needed.
+Maximum 4000 mg (4 g) per 24 hours for short-term use in healthy
+adults. For patients with chronic alcohol use, hepatic impairment, or
+malnourishment, reduce the maximum daily dose to 2000-3000 mg.
+
+PEDIATRIC DOSAGE
+10-15 mg/kg per dose orally every 4-6 hours as needed.
+Maximum 5 doses (75 mg/kg) in 24 hours. Always dose pediatric
+paracetamol by weight, not by age alone.
+
+CONTRAINDICATIONS
+- Severe hepatic impairment or active liver failure
+- Known hypersensitivity to paracetamol
+
+WARNINGS
+Paracetamol overdose is a leading cause of acute liver failure.
+Patients must be counseled to check all combination cold/flu products
+for paracetamol content to avoid inadvertent double-dosing. Chronic
+alcohol use increases hepatotoxicity risk even at standard doses.
+
+DRUG INTERACTIONS
+- Warfarin: chronic paracetamol use (regular dosing over several days)
+  can potentiate the INR-raising effect of warfarin; monitor INR more
+  closely if used together for more than 2-3 days.
+- Isoniazid and other CYP2E1 inducers increase the risk of
+  hepatotoxicity.
+
+OVERDOSE MANAGEMENT
+Acetylcysteine (NAC) is the antidote, most effective within 8 hours of
+ingestion but still indicated later. Obtain a serum paracetamol level
+at 4 hours post-ingestion (or as soon as possible after) and plot
+against the Rumack-Matthew nomogram to determine treatment need.
+
+STORAGE
+Store at room temperature, away from moisture. Keep out of reach of
+children -- pediatric liquid formulations are a common source of
+accidental overdose.

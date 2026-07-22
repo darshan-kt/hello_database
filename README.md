@@ -41,9 +41,11 @@ EMS_DB/  (PostgreSQL)
    3 views, 1 materialized view).
         │
         ▼
-(next) RAG project  (Vector DB)
-   Embeddings + semantic search -- the "Vector DB" branch from the
-   basics doc, built out for real.
+HospitalRAG_DB/  (PostgreSQL + pgvector)
+   The "Vector DB" branch from the basics doc, built out for real:
+   embeddings, chunking, semantic search, prompt construction, and
+   an LLM answering only from retrieved context -- with citations,
+   and an honest "I don't know" when nothing relevant exists.
 ```
 
 ---
@@ -89,26 +91,36 @@ walkthrough touching every one of those PostgreSQL features.
 
 ---
 
-## What's next — a RAG project (Vector DB)
+## Project 3 — Hospital AI Knowledge Assistant (RAG)
 
-The basics doc I started with already sketches the vector-database
-branch of the database tree — Pinecone, Milvus, Weaviate, Qdrant,
-Chroma — for embeddings and similarity search. The next project builds
-that out for real: a Retrieval-Augmented Generation backend, storing
-document embeddings in a vector store, doing semantic search over them,
-and feeding the results into an LLM — most likely paired with a
-relational database for the metadata/document bookkeeping a pure vector
-store isn't good at, the same way the two projects above paired a
-relational schema with the business logic around it.
+**Stack:** PostgreSQL 16 + pgvector · Python (FastAPI, psycopg3) · a local embedding model + local LLM by default (no API key required) · Docker
+
+![Hospital RAG walkthrough: staff asks a grounded question, sees citations, gets an honest "I don't know" for an out-of-scope question, admin manages documents and runs the evaluation harness](HospitalRAG_DB/docs/screenshots/walkthrough.gif)
+
+A genre change from the first two: Retrieval-Augmented Generation
+instead of CRUD. A staff member asks a question in a chat UI; the
+system embeds it, runs a `pgvector` cosine-similarity search (backed by
+an HNSW index) over chunked hospital documents, builds a grounded
+prompt, and only then asks an LLM — with citations back to the source
+chunks, and a deterministic refusal (not just a prompt instruction)
+when nothing relevant was retrieved. The default embedding model and
+LLM both run locally on CPU, so the whole thing works with zero API
+keys; an OpenAI key is a drop-in upgrade, not a requirement.
+
+**[→ HospitalRAG_DB/README.md](HospitalRAG_DB/README.md)** — Docker
+quickstart, the chat UI, and `make demo` for a narrated walkthrough
+(including a real local-LLM call).
 
 ## Repo layout
 
 ```
 hello_database/
 ├── docs/
-│   ├── 1.Database_Basics_Reference.md          Relational vs NoSQL vs Vector DBs
+│   ├── 1.Database_Basics_Reference.md              Relational vs NoSQL vs Vector DBs
 │   ├── 2.Mini_Ecommerce_Database_Project_Guide.md   The brief behind mini_EcommerceDB/
-│   └── 3.EMS_DB                                 The brief behind EMS_DB/
+│   ├── 3.EMS_DB.md                                  The brief behind EMS_DB/
+│   └── 4.Hospital_AI_Knowledge_Assistant_RAG_Roadmap.md   The brief behind HospitalRAG_DB/
 ├── mini_EcommerceDB/     Project 1 -- MySQL, transactions, the fundamentals
-└── EMS_DB/               Project 2 -- PostgreSQL, advanced SQL, reporting
+├── EMS_DB/               Project 2 -- PostgreSQL, advanced SQL, reporting
+└── HospitalRAG_DB/       Project 3 -- PostgreSQL + pgvector, RAG, embeddings, LLMs
 ```

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hospital AI Knowledge Assistant</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">🏥 Hospital Knowledge Assistant</div>
+  <div id="auth-status" class="auth-status"></div>
+</header>
+
+<div id="toast" class="toast hidden"></div>
+
+<!-- ---------------- Auth screen ---------------- -->
+<section id="auth-screen" class="auth-screen">
+  <div class="auth-card">
+    <div class="tabs">
+      <button class="tab active" data-role="staff">Staff</button>
+      <button class="tab" data-role="admin">Admin</button>
+    </div>
+
+    <div id="staff-auth">
+      <form id="staff-login-form" class="auth-form">
+        <label>Email <input type="email" name="email" required value="demo.staff@hospital.test"></label>
+        <label>Password <input type="password" name="password" required value="learn-123"></label>
+        <button type="submit">Log in</button>
+        <p class="hint">Demo mode: any email/password logs you in -- unrecognized emails create a new account automatically. Pre-filled account has real conversation history.</p>
+      </form>
+    </div>
+
+    <div id="admin-auth" class="hidden">
+      <form id="admin-login-form" class="auth-form">
+        <label>Email <input type="email" name="email" required value="admin@hospital.test"></label>
+        <label>Password <input type="password" name="password" required value="admin-123"></label>
+        <button type="submit">Log in as admin</button>
+        <p class="hint">Same demo-mode login as Staff -- any email/password works.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ---------------- Staff: chat ---------------- -->
+<main id="staff-screen" class="chat-screen hidden">
+  <aside class="conversation-sidebar">
+    <button id="new-chat-btn" class="primary">+ New conversation</button>
+    <div id="conversation-list" class="conversation-list"></div>
+  </aside>
+
+  <section class="chat-main">
+    <div id="chat-messages" class="chat-messages">
+      <div class="chat-empty">Ask a question grounded in the hospital's documents -- try
+        "What is the treatment protocol for dengue fever?"</div>
+    </div>
+    <form id="chat-form" class="chat-input-row">
+      <select id="chat-department-filter"><option value="">All departments</option></select>
+      <input type="text" id="chat-input" placeholder="Ask a question..." autocomplete="off" required>
+      <button type="submit" id="chat-send-btn" class="primary">Ask</button>
+    </form>
+  </section>
+</main>
+
+<!-- ---------------- Admin console ---------------- -->
+<main id="admin-screen" class="app-screen hidden">
+  <nav class="tabs page-tabs">
+    <button class="tab active" data-page="a-documents">Documents</button>
+    <button class="tab" data-page="a-departments">Departments</button>
+    <button class="tab" data-page="a-evaluation">Evaluation</button>
+    <button class="tab" data-page="a-audit">Audit Log</button>
+  </nav>
+
+  <section id="page-a-documents" class="page">
+    <div class="toolbar">
+      <form id="upload-form">
+        <input type="file" id="upload-file-input" accept=".pdf,.txt,.md,.markdown" required>
+        <select id="upload-department-select"><option value="">No department</option></select>
+        <button type="submit" class="primary">Upload &amp; Ingest</button>
+      </form>
+    </div>
+    <p class="hint" id="upload-status"></p>
+    <table class="data-table" id="documents-table"></table>
+  </section>
+
+  <section id="page-a-departments" class="page hidden">
+    <div class="toolbar">
+      <form id="department-form">
+        <input type="text" id="dept-name-input" placeholder="Department name" required>
+        <input type="text" id="dept-code-input" placeholder="Code (e.g. RADIOLOGY)" required>
+        <button type="submit" class="primary">Add department</button>
+      </form>
+    </div>
+    <table class="data-table" id="departments-table"></table>
+  </section>
+
+  <section id="page-a-evaluation" class="page hidden">
+    <p class="hint">Module 10: retrieval precision/recall against a labeled question set, plus a semantic-vs-lexical comparison. See <code>scripts/eval_dataset.py</code> and <code>docs/03_optimization.md</code>.</p>
+    <div class="toolbar">
+      <button id="run-eval-btn" class="primary">Run evaluation</button>
+      <span id="eval-status" class="hint"></span>
+    </div>
+    <div id="eval-summary" class="stat-grid"></div>
+    <table class="data-table" id="eval-table"></table>
+  </section>
+
+  <section id="page-a-audit" class="page hidden">
+    <table class="data-table" id="audit-table"></table>
+  </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

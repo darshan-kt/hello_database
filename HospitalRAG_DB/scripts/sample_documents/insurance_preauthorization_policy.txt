@@ -1,0 +1,47 @@
+INSURANCE PRE-AUTHORIZATION POLICY
+
+SCOPE
+This policy applies to all elective inpatient admissions, non-emergency
+surgical procedures, advanced imaging (MRI, CT, PET), and any
+treatment exceeding the hospital's pre-authorization cost threshold of
+$1,500.
+
+WHEN PRE-AUTHORIZATION IS REQUIRED
+- Elective (non-emergency) inpatient admission
+- Elective surgery, including day-surgery procedures above the
+  threshold
+- MRI, CT, and PET imaging (except when ordered from the Emergency
+  Department for an acute presentation)
+- Durable medical equipment above $500
+- Out-of-network specialist referrals
+
+WHEN PRE-AUTHORIZATION IS NOT REQUIRED
+- Emergency Department treatment for a condition that reasonably
+  appears to be an emergency
+- Inpatient admission directly from the Emergency Department for an
+  emergent condition
+- Routine outpatient office visits with an in-network provider
+
+PROCESS
+1. The ordering clinician's office submits the pre-authorization
+   request through the insurance portal at least 5 business days
+   before the scheduled service (2 business days for urgent but
+   non-emergency cases).
+2. Include clinical justification, relevant diagnostic codes, and prior
+   conservative treatment attempted, where applicable.
+3. The insurer responds within 3 business days for standard requests,
+   or 24 hours for urgent requests.
+4. If denied, the ordering clinician may submit a peer-to-peer review
+   request within 10 business days, or file a formal appeal.
+
+BILLING IMPLICATIONS
+Services requiring pre-authorization that are performed without an
+approved authorization on file may be denied by the insurer and become
+the patient's financial responsibility, subject to the hospital's
+financial hardship policy. Registration staff must verify an active
+authorization is on file before an elective procedure is scheduled.
+
+PATIENT COMMUNICATION
+Patients must be informed if a required pre-authorization is pending
+or has been denied, and given the estimated out-of-pocket cost, before
+an elective service is rendered.

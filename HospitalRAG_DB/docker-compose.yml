@@ -1,0 +1,56 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: rag_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: hospital_rag
+      POSTGRES_USER: rag_app
+      POSTGRES_PASSWORD: rag_app_pw
+    ports:
+      - "5434:5432"
+    volumes:
+      - rag_pg_data:/var/lib/postgresql/data
+      - ./sql/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rag_app -d hospital_rag"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: .
+    container_name: rag_backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: hospital_rag
+      DB_USER: rag_app
+      DB_PASSWORD: rag_app_pw
+      SESSION_SECRET_KEY: dev-secret-change-me
+      # --- provider config: local by default, no API key needed ---
+      EMBEDDING_PROVIDER: local
+      LOCAL_EMBEDDING_MODEL: sentence-transformers/all-MiniLM-L6-v2
+      LLM_PROVIDER: local
+      LOCAL_LLM_MODEL: Qwen/Qwen2.5-0.5B-Instruct
+      # Set OPENAI_API_KEY (and flip LLM_PROVIDER/EMBEDDING_PROVIDER to
+      # "openai") in a .env file to upgrade -- see README.
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+    ports:
+      - "5002:5000"
+    volumes:
+      - rag_model_cache:/app/.cache
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/api/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 60s
+
+volumes:
+  rag_pg_data:
+  rag_model_cache:
