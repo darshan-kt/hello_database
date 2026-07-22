@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mini E-Commerce</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">🛒 Mini E-Commerce</div>
+  <div id="auth-status" class="auth-status"></div>
+</header>
+
+<div id="toast" class="toast hidden"></div>
+
+<!-- ---------------- Auth screen ---------------- -->
+<section id="auth-screen" class="auth-screen">
+  <div class="auth-card">
+    <div class="tabs">
+      <button class="tab active" data-tab="login">Log in</button>
+      <button class="tab" data-tab="register">Register</button>
+    </div>
+
+    <form id="login-form" class="auth-form">
+      <label>Email <input type="email" name="email" required autocomplete="username"></label>
+      <label>Password <input type="password" name="password" required autocomplete="current-password"></label>
+      <button type="submit">Log in</button>
+      <p class="hint">Seeded demo account: <code>asha@example.com</code> / any password won't match seed hashes -- register a fresh account instead.</p>
+    </form>
+
+    <form id="register-form" class="auth-form hidden">
+      <label>Name <input type="text" name="name" required></label>
+      <label>Email <input type="email" name="email" required autocomplete="username"></label>
+      <label>Password <input type="password" name="password" required autocomplete="new-password"></label>
+      <button type="submit">Create account</button>
+    </form>
+  </div>
+</section>
+
+<!-- ---------------- Main app ---------------- -->
+<main id="app-screen" class="app-screen hidden">
+
+  <nav class="tabs page-tabs">
+    <button class="tab active" data-page="catalog">Catalog</button>
+    <button class="tab" data-page="orders">Order History</button>
+  </nav>
+
+  <div class="layout">
+
+    <!-- Catalog page -->
+    <section id="page-catalog" class="page">
+      <div class="category-bar" id="category-bar"></div>
+      <div class="product-grid" id="product-grid"></div>
+    </section>
+
+    <!-- Order history page -->
+    <section id="page-orders" class="page hidden">
+      <div id="order-list" class="order-list"></div>
+    </section>
+
+    <!-- Cart sidebar -->
+    <aside class="cart-panel">
+      <h2>Your Cart</h2>
+      <div id="cart-items" class="cart-items"></div>
+      <div class="cart-total">Total: ₹<span id="cart-total">0.00</span></div>
+      <button id="checkout-btn" class="primary" disabled>Checkout</button>
+    </aside>
+  </div>
+</main>
+
+<!-- ---------------- Payment modal ---------------- -->
+<div id="payment-modal" class="modal-backdrop hidden">
+  <div class="modal">
+    <h2>Order #<span id="pm-order-id"></span> created</h2>
+    <p>Total due: ₹<span id="pm-total"></span></p>
+
+    <label>Payment method
+      <select id="pm-method">
+        <option value="card">Card</option>
+        <option value="upi">UPI</option>
+        <option value="wallet">Wallet</option>
+        <option value="cod">Cash on delivery</option>
+      </select>
+    </label>
+
+    <label class="checkbox-row">
+      <input type="checkbox" id="pm-simulate-failure">
+      Simulate a declined payment (demo)
+    </label>
+
+    <div class="modal-actions">
+      <button id="pm-pay-btn" class="primary">Pay now</button>
+      <button id="pm-close-btn" class="secondary">Close</button>
+    </div>
+    <p id="pm-result" class="pm-result"></p>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
